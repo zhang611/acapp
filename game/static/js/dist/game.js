@@ -220,11 +220,12 @@ requestAnimationFrame(AC_GAME_ANIMATION);class GameMap extends AcGameObject {
 
 
         this.playground.game_map.$canvas.mousedown(function (e) {
+            const rect = outer.ctx.canvas.getBoundingClientRect();
             if (e.which === 3) {
-                outer.move_to(e.clientX, e.clientY);
+                outer.move_to(e.clientX - rect.left, e.clientY - rect.top);
             } else if (e.which === 1) {
                 if (outer.cur_skill === "fireball") {
-                    outer.shoot_fireball(e.clientX, e.clientY);
+                    outer.shoot_fireball(e.clientX - rect.left, e.clientY - rect.top);
                 }
                 outer.cur_skill = null;
             }
@@ -306,7 +307,6 @@ requestAnimationFrame(AC_GAME_ANIMATION);class GameMap extends AcGameObject {
             // let player = this.playground.players[0];  // 全都攻击玩家
             let player = this.playground.players[Math.floor(Math.random() * this.playground.players.length)];
             
-
             // 避免朝自己发射子弹
             while (player === this) {
                 player = this.playground.players[Math.floor(Math.random() * this.playground.players.length)];
@@ -426,27 +426,14 @@ requestAnimationFrame(AC_GAME_ANIMATION);class GameMap extends AcGameObject {
         this.root = root;
         this.$playground = $(`<div class="ac-game-playground"></div>`);
 
-        // this.hide();
-        this.root.$ac_game.append(this.$playground);
-        this.width = this.$playground.width();
-        this.height = this.$playground.height();
-        this.game_map = new GameMap(this);
-
-        this.players = [];
-        this.players.push(new Player(this, this.width/2, this.height/2, this.height*0.05, "white", this.height*0.15, true));
-
-        // 创造敌人
-        for (let i = 0; i < 5; i++) {
-            this.players.push(new Player(this, this.width/2, this.height/2, this.height*0.05, this.get_random_color(), this.height*0.15, false));
-        }
-
+        this.hide();
 
         this.start();
     }
 
     get_random_color() {
         let colors = ["blue", "red", "pink", "grey", "green"];
-        return colors[Math.floor(Math.random()*5)];
+        return colors[Math.floor(Math.random() * 5)];
     }
 
 
@@ -456,6 +443,18 @@ requestAnimationFrame(AC_GAME_ANIMATION);class GameMap extends AcGameObject {
 
     show() {
         this.$playground.show();
+        this.root.$ac_game.append(this.$playground);
+        this.width = this.$playground.width();
+        this.height = this.$playground.height();
+        this.game_map = new GameMap(this);
+
+        this.players = [];
+        this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, "white", this.height * 0.15, true));
+
+        // 创造敌人
+        for (let i = 0; i < 5; i++) {
+            this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, this.get_random_color(), this.height * 0.15, false));
+        }
     }
 
     hide() {
@@ -465,7 +464,7 @@ requestAnimationFrame(AC_GAME_ANIMATION);class GameMap extends AcGameObject {
     constructor(id) {
         this.id = id;
         this.$ac_game = $('#' + id);
-        // this.menu = new AcGameMenu(this);
+        this.menu = new AcGameMenu(this);
         this.playground = new AcGamePlayground(this);
         this.start();
     }

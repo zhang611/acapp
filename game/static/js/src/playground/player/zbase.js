@@ -41,11 +41,12 @@ class Player extends AcGameObject {
 
 
         this.playground.game_map.$canvas.mousedown(function (e) {
+            const rect = outer.ctx.canvas.getBoundingClientRect();
             if (e.which === 3) {
-                outer.move_to(e.clientX, e.clientY);
+                outer.move_to(e.clientX - rect.left, e.clientY - rect.top);
             } else if (e.which === 1) {
                 if (outer.cur_skill === "fireball") {
-                    outer.shoot_fireball(e.clientX, e.clientY);
+                    outer.shoot_fireball(e.clientX - rect.left, e.clientY - rect.top);
                 }
                 outer.cur_skill = null;
             }
@@ -127,7 +128,6 @@ class Player extends AcGameObject {
             // let player = this.playground.players[0];  // 全都攻击玩家
             let player = this.playground.players[Math.floor(Math.random() * this.playground.players.length)];
             
-
             // 避免朝自己发射子弹
             while (player === this) {
                 player = this.playground.players[Math.floor(Math.random() * this.playground.players.length)];
