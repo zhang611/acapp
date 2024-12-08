@@ -53,7 +53,7 @@ class Player extends AcGameObject {
         });
 
         $(window).keydown(function (e) {
-            if (e.which === 81) {
+            if (e.which === 81) {     // Q 键盘，按下q+鼠标左键发射技能
                 outer.cur_skill = "fireball";
                 return false;
             }

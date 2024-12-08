@@ -232,7 +232,7 @@ requestAnimationFrame(AC_GAME_ANIMATION);class GameMap extends AcGameObject {
         });
 
         $(window).keydown(function (e) {
-            if (e.which === 81) {
+            if (e.which === 81) {     // Q 键盘，按下q+鼠标左键发射技能
                 outer.cur_skill = "fireball";
                 return false;
             }
@@ -427,7 +427,6 @@ requestAnimationFrame(AC_GAME_ANIMATION);class GameMap extends AcGameObject {
         this.$playground = $(`<div class="ac-game-playground"></div>`);
 
         this.hide();
-
         this.start();
     }
 
