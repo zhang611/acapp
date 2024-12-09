@@ -41,7 +41,7 @@ class Player extends AcGameObject {
     }
 
     start() {
-        this.playground.player_count ++ ;
+        this.playground.player_count++;
         this.playground.notice_board.write("已就绪：" + this.playground.player_count + "人");
 
         if (this.playground.player_count >= 3) {
@@ -60,10 +60,10 @@ class Player extends AcGameObject {
 
     add_listening_events() {
         let outer = this;
-        this.playground.game_map.$canvas.on("contextmenu", function() {
+        this.playground.game_map.$canvas.on("contextmenu", function () {
             return false;
         });
-        this.playground.game_map.$canvas.mousedown(function(e) {
+        this.playground.game_map.$canvas.mousedown(function (e) {
             if (outer.playground.state !== "fighting")
                 return true;
 
@@ -103,8 +103,7 @@ class Player extends AcGameObject {
             }
         });
 
-        // 聊天系统
-        this.playground.game_map.$canvas.keydown(function(e) {
+        this.playground.game_map.$canvas.keydown(function (e) {
             if (e.which === 13) {  // enter
                 if (outer.playground.mode === "multi mode") {  // 打开聊天框
                     outer.playground.chat_field.show_input();
@@ -152,7 +151,7 @@ class Player extends AcGameObject {
     }
 
     destroy_fireball(uuid) {
-        for (let i = 0; i < this.fireballs.length; i ++ ) {
+        for (let i = 0; i < this.fireballs.length; i++) {
             let fireball = this.fireballs[i];
             if (fireball.uuid === uuid) {
                 fireball.destroy();
@@ -186,7 +185,7 @@ class Player extends AcGameObject {
     }
 
     is_attacked(angle, damage) {
-        for (let i = 0; i < 20 + Math.random() * 10; i ++ ) {
+        for (let i = 0; i < 20 + Math.random() * 10; i++) {
             let x = this.x, y = this.y;
             let radius = this.radius * Math.random() * 0.1;
             let angle = Math.PI * 2 * Math.random();
@@ -344,7 +343,7 @@ class Player extends AcGameObject {
             }
         }
 
-        for (let i = 0; i < this.playground.players.length; i ++ ) {
+        for (let i = 0; i < this.playground.players.length; i++) {
             if (this.playground.players[i] === this) {
                 this.playground.players.splice(i, 1);
                 break;
