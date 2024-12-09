@@ -2,61 +2,55 @@ class AcGameMenu {
     constructor(root) {
         this.root = root;
         this.$menu = $(`
-<div class='ac-game-menu'>
-            <div class="ac-game-menu-field">
-                <div class="ac-game-menu-field-item ac-game-menu-field-item-single">
-                    单人模式
-                </div>
-                <br>
-                <div class="ac-game-menu-field-item ac-game-menu-field-item-multi">
-                    多人模式
-                </div>
-                <br>
-                <div class="ac-game-menu-field-item ac-game-menu-field-item-settings">
-                    设置
-                </div>
-            </div>
-
+<div class="ac-game-menu">
+    <div class="ac-game-menu-field">
+        <div class="ac-game-menu-field-item ac-game-menu-field-item-single-mode">
+            单人模式
+        </div>
+        <br>
+        <div class="ac-game-menu-field-item ac-game-menu-field-item-multi-mode">
+            多人模式
+        </div>
+        <br>
+        <div class="ac-game-menu-field-item ac-game-menu-field-item-settings">
+            退出
+        </div>
+    </div>
 </div>
-
 `);
+        this.$menu.hide();
         this.root.$ac_game.append(this.$menu);
-        this.$single = this.$menu.find('.ac-game-menu-field-item-single')
-        this.$multi = this.$menu.find('.ac-game-menu-field-item-multi')
-        this.$settings = this.$menu.find('.ac-game-menu-field-item-settings')
+        this.$single_mode = this.$menu.find('.ac-game-menu-field-item-single-mode');
+        this.$multi_mode = this.$menu.find('.ac-game-menu-field-item-multi-mode');
+        this.$settings = this.$menu.find('.ac-game-menu-field-item-settings');
 
         this.start();
-
     }
+
     start() {
-        this.add_listening_event();
+        this.add_listening_events();
     }
 
-    add_listening_event() {
+    add_listening_events() {
         let outer = this;
-        this.$single.click(function () {
+        this.$single_mode.click(function(){
             outer.hide();
-            outer.root.playground.show();
-            console.log("click single mode")
+            outer.root.playground.show("single mode");
         });
-        this.$multi.click(function () {
-            console.log("click multi mode")
+        this.$multi_mode.click(function(){
+            outer.hide();
+            outer.root.playground.show("multi mode");
         });
-        this.$settings.click(function () {
-            console.log("click settings mode")
+        this.$settings.click(function(){
+            outer.root.settings.logout_on_remote();
         });
     }
 
-    // 显示menu
-    show() {
+    show() {  // 显示menu界面
         this.$menu.show();
     }
 
-    // 关闭menu
-    hide() {
+    hide() {  // 关闭menu界面
         this.$menu.hide();
-
     }
-
-
 }

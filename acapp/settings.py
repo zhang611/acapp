@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-crnl3y^#v=h2e#2reujse5&+6ygjo+)cckg$)kyp4!@i&s!)-g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["121.41.174.139", "app3526.acapp.acwing.com.cn"]
 
@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ["121.41.174.139", "app3526.acapp.acwing.com.cn"]
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'game.apps.GameConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -81,6 +82,17 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    },
+}
+USER_AGENTS_CACHE = 'default'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -127,4 +139,16 @@ MEDIA_URL = '/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'djngo.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ASGI_APPLICATION = 'acapp.asgi.application'
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
+
+ROOM_CAPACITY = 3;
